@@ -61,3 +61,21 @@ message they were sent.
 * Since it appears that a contract cannot actually keep a secret, it appears
   that this will require the **whisper** network so that the sms code can be
   encrypted before returned.
+* Should `PhoneNumberDatabase` be the primary interface?
+* The `SMSVerification` contract needs to be replacable since the current
+  approach could be fundamentally broken.
+
+# Design
+
+Contracts
+
+* PhoneNumberDatabase - responsible for storing the mapping between operators
+  and their phone numbers.
+* SMSVerification - responsible for interfacing with relay contracts.
+* Relay - One contract for each registered relay.
+
+# TODO
+
+* Figure out how to *regulate* the relay contracts.  
+    * They need to get paid
+    * They need to be penalized somehow for not relaying.
