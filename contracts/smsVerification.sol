@@ -58,7 +58,20 @@ contract SMSVerification {
             return SMSMessage(relay.phoneNumber(), message);
         }
 
-        function verifyPhoneNumber(bytes32 smsMessage) {
-            // Remove a phone number to the database.
+        function reportMessage(bytes32 smsMessage) {
+            // TODO: how do we check for a message's validity.
+            bool is_message_valid = ...;
+
+            if ( is_message_valid )
+                // TODO: lookup the appropriate relay.
+                address relay = ....;
+                // TODO: lookup the phone number being verified.
+                bytes32 phoneNumber = ...;
+                // TODO: how do we generate messages...
+                bytes32 message = ...;
+
+                relay.sendSMS(phoneNumber, message);
+            else:
+                // Fail?
         }
 }
