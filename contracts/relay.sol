@@ -30,6 +30,11 @@ contract SMSRelay {
         }
 
         // Relay API
+        function willRelay() returns (bool is_willing_to_relay) {
+                // TODO: remove hard coded value.
+                return true;
+        }
+
         function receivedSMS(bytes32 fromNumber, bytes32 smsMessage) {
                 // Report the message to the owner contract via the `reportSMSReceipt`
                 owner.reportSMSReceipt(fromNumber, smsMessage)

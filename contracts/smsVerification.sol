@@ -5,6 +5,13 @@
 contract SMSVerification {
         // `owner` is the main phone number verification contract
         address owner;
+        address[] relays;
+        int const NO_RELAY_AVAILABLE = -1;
+
+        struct SMSMessage {
+            bytes32 phoneNumber;
+            bytes32 message;
+        }
 
         // Initializer
         function SMSVerification() {
@@ -15,10 +22,40 @@ contract SMSVerification {
         // Management
         // TODO: What sort of management should go in place here.
 
+
+        // Private API
+        function getRandomRelayIndex() private returns (int relayIndex) {
+            // TODO: sanity check there are any relays at all
+            for (var i = 0; i < relays.length; i++)
+            {
+                // Pick a random relay using `block.blockhash()` as the random
+                // number generator.
+                int relayIndex = (block.blockhash() + i) % relays.length;
+
+                // Check whether the relay is willing to relay the message over SMS
+                if ( relays[relayIndex].is_willing_to_relay )
+                    return relayIndex;
+            }
+            return NO_RELAY_AVAILABLE;
+        }
+
         // Verification API
-        function initiatePhoneNumberVerification(address operator, bytes32 phoneNumber) {
-            // Dole out jobs to the relay contracts such that the `operator`
-            // will get an SMS message that they can then report back.
+        function initiateVerification(address operator, bytes32 phoneNumber) returns (SMSMessage smsMessage) {
+            int relayIndex = getRandomRelay();
+
+            if ( relayIndex == NO_RELAY_AVAILABLE )
+                // fail!
+
+            address relay = relays[relayIndex];
+
+            // TODO: How do we generate the message.
+            // TODO: the message needs to be stored somewhere it can easily be
+            // looked up later and related to the current phone number being verified.
+            bytes32 message = ;
+
+            // TODO: store the `phoneNumber` and `operator` somewhere.
+
+            return SMSMessage(relay.phoneNumber(), message);
         }
 
         function verifyPhoneNumber(bytes32 smsMessage) {
