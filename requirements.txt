@@ -1,0 +1,1 @@
+-e git+git@github.com:pipermerriam/populus.git@4ca4f0cdea912a56e7abf8e3868b907aa7694bd5#egg=populus-master
