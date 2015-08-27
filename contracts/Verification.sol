@@ -1,5 +1,10 @@
 import "owned";
 
+contract Relay {
+        function getNumSecrets() returns (uint) {}
+        function getLatestSecret(bool consume) returns (bytes32) {}
+}
+
 
 contract SMSVerifier is owned {
         address[] relays;
@@ -20,6 +25,7 @@ contract SMSVerifier is owned {
                 bytes32 relaySecret;
                 uint relayDeposit;
         }
+        Verification[] verifications;
 
         function initiateVerification(bytes32 phoneNumber, address operator) {
                 address relay = getRandomRelay();
